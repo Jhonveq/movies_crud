@@ -12,3 +12,6 @@ Movie.belongsToMany(Actor,{through: 'MovieActors'})
 
 Director.belongsToMany(Movie,{through: 'MovieDirectors'})
 Movie.belongsToMany(Director,{through: 'MovieDirectors'})
+
+Actor.belongsToMany(Genre, {through: 'ActorsGenres'})
+Genre.belongsToMany(Actor, {through: 'ActorsGenres'})

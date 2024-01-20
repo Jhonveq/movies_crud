@@ -3,7 +3,7 @@ const Actor = require('../models/Actor');
 const Genre = require('../models/Genre');
 
 const getAll = catchError(async(req, res) => {
-    const results = await Actor.findAll();
+    const results = await Actor.findAll({include: [Genre]});
     return res.json(results);
 });
 
@@ -35,10 +35,19 @@ const update = catchError(async(req, res) => {
     return res.json(result[1][0]);
 });
 
+const setActorsGenres = catchError(async(req,res) =>{
+    const { id } = req.params
+    const actor = await Actor.findByPk(id)
+    await actor.setGenres(req.body)
+    const genres = await actor.getGenres()
+    return res.json(genres)
+})
+
 module.exports = {
     getAll,
     create,
     getOne,
     remove,
-    update
+    update,
+    setActorsGenres
 }
